@@ -10,3 +10,39 @@ services:
       - .:/app
     ports:
       - 8080:5291
+    depends_on:
+      postgresql:
+        condition: service_healthy
+  postgresql:
+    container_name: postgresql_container
+    build:
+      context: database
+      dockerfile: dockerfile
+    tty: true
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_USER: example
+      POSTGRES_DB: example
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U example"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+  admin:
+    image: dpage/pgadmin4
+    ports:
+      - 1111:80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@sample.com
+      PGADMIN_DEFAULT_PASSWORD: password
+
+volumes:
+  pgdata: {}
+  pgadmin_data: {}
