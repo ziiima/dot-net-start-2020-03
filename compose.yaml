@@ -1,0 +1,12 @@
+services:
+  api_container:
+    container_name: api_container
+    build:
+      context: .
+      dockerfile: tmp.dockerfile
+    tty: true
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - 8080:5291
