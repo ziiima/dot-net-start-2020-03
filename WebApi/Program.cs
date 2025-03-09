@@ -1,4 +1,5 @@
 using System.Net;
+using WebApi.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,14 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
+
+if (args.Contains("--migrate"))
+{
+    var connectionString = "Host=postgresql_container;User Id=example;Password=example;Database=example;Port=5432";
+    MigrationExtensions migrationOperation = new MigrationExtensions(connectionString);
+    migrationOperation.EnsureConnection();
+    migrationOperation.RunMigrations();
+}
 
 app.Run();
 
