@@ -7,12 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="dbup-core" Version="6.0.4" />
     <PackageReference Include="dbup-postgresql" Version="6.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.13" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+    <PackageReference Include="Npgsql" Version="9.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
 
     <EmbeddedResource Include="Scripts\0001.sql" />
+    <EmbeddedResource Include="Scripts\0002.sql" />
   </ItemGroup>
 
 </Project>
