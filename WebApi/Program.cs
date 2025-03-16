@@ -1,6 +1,12 @@
 using System.Net;
+using System.Data;
 using WebApi.Migrations;
 using WeatherForecast.Controllers;
+using BugReport.Controllers;
+using BugReport.Repository;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -15,6 +21,13 @@ builder.WebHost.UseKestrel(options =>
 {
     options.Listen(IPAddress.Parse("0.0.0.0"), 5291);
 });
+
+builder.Services.AddScoped<IDbConnection>(provider =>
+{
+    var connectionString = "Server=postgresql_container;Port=5432;Database=example;User Id=example;Password=example;";
+    return new NpgsqlConnection(connectionString);
+});
+builder.Services.AddScoped<BugReportRepository>();
 
 var app = builder.Build();
 app.UseRouting(); // ルーティングを有効にする

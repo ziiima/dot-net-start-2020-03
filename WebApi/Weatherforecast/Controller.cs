@@ -4,7 +4,7 @@ namespace WeatherForecast.Controllers
 {
     [ApiController]
     [Route("/weatherforecast")]
-    public class WeatherForecastController: ControllerBase
+    public class WeatherForecastController : ControllerBase
     {
         [HttpGet]
         public ActionResult GetWeatherForecasts()
@@ -13,7 +13,7 @@ namespace WeatherForecast.Controllers
             {
                 "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
             };
-            var forecast =  Enumerable.Range(1, 5).Select(index =>
+            var forecast = Enumerable.Range(1, 5).Select(index =>
                 new WeatherForecast
                 (
                     DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -24,10 +24,10 @@ namespace WeatherForecast.Controllers
             return Ok(forecast);
         }
 
-        record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-            {
-                public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-            }
+        public sealed record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+        {
+            public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        }
 
     }
 }
